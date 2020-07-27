@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: 后端api脚手架
+
+
+swagger:
+  enable: true
