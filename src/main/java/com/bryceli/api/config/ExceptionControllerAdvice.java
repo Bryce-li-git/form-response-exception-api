@@ -1,6 +1,8 @@
 package com.bryceli.api.config;
 
+import com.bryceli.api.emum.ResultCode;
 import com.bryceli.api.exception.APIException;
+import com.bryceli.api.vo.ResultVO;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,15 +24,15 @@ public class ExceptionControllerAdvice {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        // 从异常对象中拿到ObjectError对象
+    public ResultVO<String> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
-        // 然后提取错误提示信息进行返回
-        return objectError.getDefaultMessage();
+        // 注意哦，这里传递的响应码枚举
+        return new ResultVO<>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
     }
 
     @ExceptionHandler(APIException.class)
-    public String APIExceptionHandler(APIException e) {
-        return e.getMsg();
+    public ResultVO<String> APIExceptionHandler(APIException e) {
+        // 注意哦，这里传递的响应码枚举
+        return new ResultVO<>(ResultCode.FAILED, e.getMsg());
     }
 }

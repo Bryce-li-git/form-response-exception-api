@@ -5,10 +5,7 @@ import com.bryceli.api.vo.ResultVO;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,9 +19,19 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
-    @PostMapping("/getuser")
+    @PostMapping("/adduser")
     public String addUser(@RequestBody @Valid User user){
         return "UserService.add() success";
+    }
+
+    @GetMapping("/getUser")
+    public ResultVO<User> getUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setAccount("12345678");
+        user.setPassword("12345678");
+        user.setEmail("123@qq.com");
+        return new ResultVO<>(user);
     }
 
 }
