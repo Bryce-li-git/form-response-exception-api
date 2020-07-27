@@ -1,5 +1,6 @@
 package com.bryceli.api.config;
 
+import com.bryceli.api.exception.APIException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,5 +27,10 @@ public class ExceptionControllerAdvice {
         ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
         // 然后提取错误提示信息进行返回
         return objectError.getDefaultMessage();
+    }
+
+    @ExceptionHandler(APIException.class)
+    public String APIExceptionHandler(APIException e) {
+        return e.getMsg();
     }
 }
