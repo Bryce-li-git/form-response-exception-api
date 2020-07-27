@@ -23,10 +23,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @PostMapping("/getuser")
-    public String addUser(@RequestBody @Valid User user, BindingResult bindingResult){
-        for(ObjectError objectError:bindingResult.getAllErrors()){
-            return objectError.getDefaultMessage();
-        }
+    public String addUser(@RequestBody @Valid User user){
         return "UserService.add() success";
     }
 
