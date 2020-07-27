@@ -1,5 +1,6 @@
 package com.bryceli.api.controller;
 
+import com.bryceli.api.annotation.NotResponseBody;
 import com.bryceli.api.entity.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,8 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
+    //加了这个注解的方法，我们就不做数据统一响应处理，返回类型是啥就是返回的啥
+    @NotResponseBody
     public User getUser() {
         User user = new User();
         user.setId(1L);

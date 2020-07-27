@@ -1,5 +1,6 @@
 package com.bryceli.api.config;
 
+import com.bryceli.api.annotation.NotResponseBody;
 import com.bryceli.api.exception.APIException;
 import com.bryceli.api.vo.ResultVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,7 +39,8 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> aClass) {
         // 如果接口返回的类型本身就是ResultVO那就没有必要进行额外的操作，返回false
-        return !returnType.getParameterType().equals(ResultVO.class);
+        // 如果方法上加了我们的自定义注解也没有必要进行额外的操作
+        return !(returnType.getParameterType().equals(ResultVO.class) || returnType.hasMethodAnnotation(NotResponseBody.class));
     }
 
     @Override
